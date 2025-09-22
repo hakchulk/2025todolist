@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css"
+      integrity="sha512-2bBQCjcnw658Lho4nlXJcc6WkV/UxpE/sAokbXPxQNGqmNdQrWqtw26Ns9kFF/yG792pKR1Sx8/Y1Lf1XN4GKA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <div class="container py-3 gap-3">
+      <div class="row">
+        <div class="col d-flex">
+          <input
+            type="text"
+            id="inp"
+            class="form-control"
+            placeholder="오늘의 할일 입력"
+          />
+          <button class="btn btn-primary ms-3" id="btnInp" style="width: 100px">
+            입력
+          </button>
+          <button
+            class="d-none btn btn-warning ms-3"
+            id="btnModi"
+            style="width: 100px"
+          >
+            수정
+          </button>
+        </div>
+      </div>
+      <div class="row py-3">
+        <div class="col">
+          <ul class="todoView">
+            <!-- <li>
+              <p>오늘의 할일</p>
+              <div class="d-flex gap-3">
+                <i class="fa-solid fa-square-check"></i>
+                <i class="fa-solid fa-square"></i>
+                <i class="btnModi fa-solid fa-pen" onclick="modiItem(this)"></i>
+                <i class="btnDel fa-solid fa-trash" onclick="delItem(this)"></i>
+              </div>
+            </li> -->
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <button class="btn btn-danger" id="delAll">전체삭제</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+      const btnInp = document.getElementById("btnInp");
+      const txtInp = document.getElementById("inp");
+      const btnDelAll = document.getElementById("delAll");
+      const todoView = document.querySelector(".todoView");
+      //   const listData = [];
+
+      btnInp.addEventListener("click", function () {
+        console.log(txtInp);
+        console.log(txtInp.value);
+        if (txtInp.value == "") {
+          alert("할일을 입력하세요");
+          return;
+        } else {
+          // 입력
+          listView.push({ todo: txtInp.value, complete: false });
+
+          viewList();
+        }
+      });
+      btnModi.addEventListener("click", function () {
+        // 수정
+        listView[_curIdx].todo = txtInp.value;
+        btnInp.classList.toggle("d-none");
+        btnModi.classList.toggle("d-none");
+        viewList();
+      });
+
+      btnDelAll.addEventListener("click", function () {
+        todoView.innerHTML = "";
+        listView.length = 0; // listData = [];
+      });
+
+      viewList();
+    </script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.bundle.min.js"
+      integrity="sha512-HvOjJrdwNpDbkGJIG2ZNqDlVqMo77qbs4Me4cah0HoDrfhrbA+8SBlZn1KrvAQw7cILLPFJvdwIgphzQmMm+Pw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </body>
+</html>
