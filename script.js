@@ -4,8 +4,6 @@ let listView = [
   { todo: "오늘 할일", complete: false },
 ];
 
-let _curIdx = -1;
-
 function getInnerText(item, idx) {
   let s = `<li class="d-flex py-2">
         <div class="col-8 justify-content-between ${
@@ -15,8 +13,12 @@ function getInnerText(item, idx) {
                 <i class="fa-solid fa-square${
                   item.complete ? "-check" : ""
                 }" onclick="done(${idx})"></i>
-                <i class="btnModi fa-solid fa-pen" onclick="modiItem(${idx})"></i>
-                <i class="btnDel fa-solid fa-trash" onclick="delItem(${idx})"></i>
+                <i class="btnModi fa-solid fa-pen ${
+                  item.complete ? "btnDisabled" : ""
+                }" onclick="modiItem(${idx})"></i>
+                <i class="btnDel fa-solid fa-trash ${
+                  item.complete ? "btnDisabled" : ""
+                }" onclick="delItem(${idx})"></i>
         </div>        
         </li>`;
 
@@ -24,7 +26,7 @@ function getInnerText(item, idx) {
 }
 
 function modiItem(idx) {
-  _curIdx = idx;
+  curIdx.value = idx;
   txtInp.value = listView[idx].todo;
 
   txtInp.focus();
