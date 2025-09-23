@@ -21,7 +21,7 @@ function loadList() {
 
 function addItem() {
   if (txtInp.value == "") {
-    alert("할일을 입력하세요");
+    alert("Enter your to-do item");
     return;
   } else {
     // 입력
