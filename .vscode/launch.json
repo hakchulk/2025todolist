@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch HTML file",
+      "file": "${file}", // 현재 열려 있는 HTML 파일
+      "url": "file://${file}", // 로컬 파일 경로로 브라우저 열기
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
+}

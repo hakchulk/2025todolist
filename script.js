@@ -6,7 +6,7 @@
 
 function init() {
   initBtnEventListeners();
-  loadList;
+  loadList();
   viewList();
 }
 
@@ -18,34 +18,32 @@ function loadList() {
     _aList = [];
   }
 }
+
+function addItem() {
+  if (txtInp.value == "") {
+    alert("할일을 입력하세요");
+    return;
+  } else {
+    // 입력
+    _aList.push({ todo: txtInp.value, complete: false });
+    saveList();
+    viewList();
+  }
+}
+
 function initBtnEventListeners() {
-  btnCancel.addEventListener("click", function () {
-    toggleBtns();
+  txtInp.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      addItem();
+    }
   });
 
   btnInp.addEventListener("click", function () {
-    console.log(txtInp);
-    console.log(txtInp.value);
-    if (txtInp.value == "") {
-      alert("할일을 입력하세요");
-      return;
-    } else {
-      // 입력
-      _aList.push({ todo: txtInp.value, complete: false });
-      saveList();
-      viewList();
-    }
-  });
-  btnModi.addEventListener("click", function () {
-    // 수정
-    _aList[curIdx.value].todo = txtInp.value;
-    saveList();
-    toggleBtns();
-    viewList();
+    addItem();
   });
 
   btnDelAll.addEventListener("click", function () {
-    const result = confirm("정말 삭제하시겠습니까?");
+    const result = confirm("Are you sure you want to delete all to-do items?");
     if (result == false) return;
     else {
       todoView.innerHTML = "";
@@ -60,39 +58,70 @@ function saveList() {
 }
 
 function getInnerText(item, idx) {
-  let s = `<li class="d-flex py-2">
-        <div class="col-9 justify-content-between ${
+  let s = `
+    <li class="d-flex py-2 align-items-center gap-3">
+        
+        <i class="btnUD fa-regular fa-square${
+          item.complete ? "-check" : ""
+        }" onclick="done(${idx})"></i>
+        
+        <div class="col-9 ${
           item.complete ? "text-decoration-line-through" : ""
-        }" >${item.todo}</div>
-        <div class="d-flex gap-3">
-                <i class="fa-solid fa-square${
-                  item.complete ? "-check" : ""
-                }" onclick="done(${idx})"></i>
-                <i class="btnModi fa-solid fa-pen ${
-                  item.complete ? "btnDisabled" : ""
-                }" onclick="modiItem(${idx})"></i>
-                <i class="btnDel fa-solid fa-trash ${
-                  item.complete ? "btnDisabled" : ""
-                }" onclick="delItem(${idx})"></i>
+        }" ><input
+            type="text"
+            id="inpItem_${idx}"
+            class="form-control ${item.complete ? "btnDisabled" : ""}"
+            placeholder=""
+            value="${item.todo}"
+            onkeydown="modiEventKeyPress(event, this, ${idx}, '${item.todo}')"
+            onblur="modiItem(this, ${idx})"
+          />        
+        </div>
+        <div class="d-flex gap-2">                
+          <i class="btnUD btnModi fa-regular fa-pen-to-square ${
+            item.complete ? "btnDisabled" : ""
+          }" onclick="focusInp(${idx})"></i>
+          <i class="btnUD btnDel fa-regular fa-square-minus ${
+            item.complete ? "btnDisabled" : ""
+          }" onclick="delItem(${idx})"></i>
         </div>        
-        </li>`;
+    </li>`;
 
   return s;
 }
 
-function modiItem(idx) {
-  curIdx.value = idx;
-  txtInp.value = _aList[idx].todo;
-
-  txtInp.focus();
-  toggleBtns();
+function focusInp(idx) {
+  const inpItem = document.getElementById(`inpItem_${idx}`);
+  inpItem.focus();
 }
 
-function toggleBtns() {
-  btnInp.classList.toggle("d-none");
-  btnModi.classList.toggle("d-none");
-  btnCancel.classList.toggle("d-none");
+function modiEventKeyPress(event, obj, idx, valOrg) {
+  if (event.key === "Enter") {
+    modiItem(obj, idx);
+  } else if (event.key === "Escape") {
+    obj.value = valOrg;
+    txtInp.focus();
+  }
 }
+
+function modiItem(obj, idx) {
+  _aList[idx].todo = obj.value;
+  saveList();
+  viewList();
+}
+
+// function modiItem(obj, idx) {
+//   curIdx.value = idx;
+//   txtInp.value = _aList[idx].todo;
+//   txtInp.focus();
+//   toggleBtns();
+// }
+
+// function toggleBtns() {
+//   btnInp.classList.toggle("d-none");
+//   // btnModi.classList.toggle("d-none");
+//   btnCancel.classList.toggle("d-none");
+// }
 
 function viewList() {
   let s = "";
@@ -102,10 +131,10 @@ function viewList() {
   const lst = document.querySelector(".todoView");
   lst.innerHTML = s;
 
-  if (btnInp.classList.contains("d-none")) btnInp.classList.toggle("d-none");
+  //if (btnInp.classList.contains("d-none")) btnInp.classList.toggle("d-none");
 
-  if (btnModi.classList.contains("d-none") == false)
-    btnModi.classList.toggle("d-none");
+  // if (btnModi.classList.contains("d-none") == false)
+  //   btnModi.classList.toggle("d-none");
 
   txtInp.value = "";
 }

@@ -26,40 +26,40 @@
         cursor: pointer;
       } */
       .btnDisabled {
-        cursor: not-allowed;
         pointer-events: none;
         opacity: 0.5;
-      }
-
-      .btnSty {
-        width: 3em;
-      }
-
-      .btnUD {
-        cursor: pointer;
+        /* cursor: not-allowed; */
       }
     </style>
   </head>
   <body>
-    <div class="container py-2">
-      <h3>Your To Do</h3>
-    </div>
-    <div class="container py-2">
+    <div class="container py-3 gap-3">
       <div class="row">
         <div class="col d-flex">
           <input
             type="text"
             id="inp"
             class="form-control"
-            placeholder="To-do list for today"
+            placeholder="오늘의 할일 입력"
           />
           <input type="hidden" id="curIdx" />
-          <button class="btnSty btn btn-secondary ms-3" id="btnInp">
-            <i class="fa-solid fa-plus"></i>
+          <button class="btn btn-primary ms-3" id="btnInp" style="width: 100px">
+            입력
           </button>
-          <!-- <button class="btnSty d-none btn btn-secondary ms-3" id="btnCancel">
-            <i class="fa-solid fa-xmark"></i>
-          </button> -->
+          <button
+            class="d-none btn btn-warning ms-3"
+            id="btnModi"
+            style="width: 100px"
+          >
+            수정
+          </button>
+          <button
+            class="d-none btn btn-primary ms-3"
+            id="btnCancel"
+            style="width: 100px"
+          >
+            취소
+          </button>
         </div>
       </div>
       <div class="row py-3">
@@ -78,11 +78,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col d-flex justify-content-end">
-          <button class="btn btn-secondary" id="delAll">
-            <i class="fa-regular fa-trash-can"></i> Remove All
-          </button>
-        </div>
+        <button class="btn btn-danger" id="delAll">전체삭제</button>
       </div>
     </div>
 
@@ -94,6 +90,7 @@
       const txtInp = document.getElementById("inp");
       const btnDelAll = document.getElementById("delAll");
       const todoView = document.querySelector(".todoView");
+      const btnCancel = document.getElementById("btnCancel");
 
       init();
     </script>
