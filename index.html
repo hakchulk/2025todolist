@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Simple To Do List</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -84,44 +84,13 @@
 
     <script src="script.js"></script>
     <script>
-      let listView = [];
+      let _aList = [];
       const btnInp = document.getElementById("btnInp");
       const curIdx = document.getElementById("curIdx");
       const txtInp = document.getElementById("inp");
       const btnDelAll = document.getElementById("delAll");
       const todoView = document.querySelector(".todoView");
       const btnCancel = document.getElementById("btnCancel");
-
-      btnCancel.addEventListener("click", function () {
-        toggleBtns();
-      });
-
-      btnInp.addEventListener("click", function () {
-        console.log(txtInp);
-        console.log(txtInp.value);
-        if (txtInp.value == "") {
-          alert("할일을 입력하세요");
-          return;
-        } else {
-          // 입력
-          listView.push({ todo: txtInp.value, complete: false });
-          saveList();
-          viewList();
-        }
-      });
-      btnModi.addEventListener("click", function () {
-        // 수정
-        listView[curIdx.value].todo = txtInp.value;
-        saveList();
-        toggleBtns();
-        viewList();
-      });
-
-      btnDelAll.addEventListener("click", function () {
-        todoView.innerHTML = "";
-        listData = [];
-        saveList();
-      });
 
       init();
     </script>

@@ -1,21 +1,62 @@
-// let listView = [
+// let _aList = [
 //   { todo: "자바", complete: false },
 //   { todo: "자바 스크립트", complete: true },
 //   { todo: "오늘 할일", complete: false },
 // ];
 
 function init() {
-  let sListView = localStorage.getItem("todoData");
-  if (sListView) {
-    listView = JSON.parse(sListView);
-  } else {
-    listView = [];
-  }
+  initBtnEventListeners();
+  loadList;
   viewList();
 }
 
+function loadList() {
+  let s_aList = localStorage.getItem("todoData");
+  if (s_aList) {
+    _aList = JSON.parse(s_aList);
+  } else {
+    _aList = [];
+  }
+}
+function initBtnEventListeners() {
+  btnCancel.addEventListener("click", function () {
+    toggleBtns();
+  });
+
+  btnInp.addEventListener("click", function () {
+    console.log(txtInp);
+    console.log(txtInp.value);
+    if (txtInp.value == "") {
+      alert("할일을 입력하세요");
+      return;
+    } else {
+      // 입력
+      _aList.push({ todo: txtInp.value, complete: false });
+      saveList();
+      viewList();
+    }
+  });
+  btnModi.addEventListener("click", function () {
+    // 수정
+    _aList[curIdx.value].todo = txtInp.value;
+    saveList();
+    toggleBtns();
+    viewList();
+  });
+
+  btnDelAll.addEventListener("click", function () {
+    const result = confirm("정말 삭제하시겠습니까?");
+    if (result == false) return;
+    else {
+      todoView.innerHTML = "";
+      _aList = [];
+      saveList();
+    }
+  });
+}
+
 function saveList() {
-  localStorage.setItem("todoData", JSON.stringify(listView));
+  localStorage.setItem("todoData", JSON.stringify(_aList));
 }
 
 function getInnerText(item, idx) {
@@ -41,7 +82,7 @@ function getInnerText(item, idx) {
 
 function modiItem(idx) {
   curIdx.value = idx;
-  txtInp.value = listView[idx].todo;
+  txtInp.value = _aList[idx].todo;
 
   txtInp.focus();
   toggleBtns();
@@ -55,8 +96,8 @@ function toggleBtns() {
 
 function viewList() {
   let s = "";
-  for (let i = 0; i < listView.length; i++) {
-    s += getInnerText(listView[i], i);
+  for (let i = 0; i < _aList.length; i++) {
+    s += getInnerText(_aList[i], i);
   }
   const lst = document.querySelector(".todoView");
   lst.innerHTML = s;
@@ -70,13 +111,13 @@ function viewList() {
 }
 
 function done(idx) {
-  listView[idx].complete = !listView[idx].complete;
+  _aList[idx].complete = !_aList[idx].complete;
   saveList();
   viewList();
 }
 
 function delItem(idx) {
-  listView.splice(idx, 1);
+  _aList.splice(idx, 1);
   saveList();
   viewList();
 }
