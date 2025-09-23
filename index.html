@@ -28,7 +28,7 @@
       .btnDisabled {
         pointer-events: none;
         opacity: 0.5;
-        cursor: not-allowed;
+        /* cursor: not-allowed; */
       }
     </style>
   </head>
@@ -52,6 +52,13 @@
             style="width: 100px"
           >
             수정
+          </button>
+          <button
+            class="d-none btn btn-primary ms-3"
+            id="btnCancel"
+            style="width: 100px"
+          >
+            취소
           </button>
         </div>
       </div>
@@ -77,12 +84,17 @@
 
     <script src="script.js"></script>
     <script>
+      let listView = [];
       const btnInp = document.getElementById("btnInp");
       const curIdx = document.getElementById("curIdx");
       const txtInp = document.getElementById("inp");
       const btnDelAll = document.getElementById("delAll");
       const todoView = document.querySelector(".todoView");
-      //   const listData = [];
+      const btnCancel = document.getElementById("btnCancel");
+
+      btnCancel.addEventListener("click", function () {
+        toggleBtns();
+      });
 
       btnInp.addEventListener("click", function () {
         console.log(txtInp);
@@ -93,24 +105,25 @@
         } else {
           // 입력
           listView.push({ todo: txtInp.value, complete: false });
-
+          saveList();
           viewList();
         }
       });
       btnModi.addEventListener("click", function () {
         // 수정
         listView[curIdx.value].todo = txtInp.value;
-        btnInp.classList.toggle("d-none");
-        btnModi.classList.toggle("d-none");
+        saveList();
+        toggleBtns();
         viewList();
       });
 
       btnDelAll.addEventListener("click", function () {
         todoView.innerHTML = "";
-        listView.length = 0; // listData = [];
+        listData = [];
+        saveList();
       });
 
-      viewList();
+      init();
     </script>
 
     <script
