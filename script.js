@@ -146,6 +146,11 @@ function done(idx) {
 }
 
 function delItem(idx) {
+  const result = confirm(
+    `Are you sure you want to delete [${_aList[idx].todo}]?`
+  );
+  if (result == false) return;
+
   _aList.splice(idx, 1);
   saveList();
   viewList();

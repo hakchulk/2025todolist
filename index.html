@@ -38,6 +38,11 @@
       .btnUD {
         cursor: pointer;
       }
+
+      #imgDelAll {
+        filter: invert(100%);
+        width: 1.5em;
+      }
     </style>
   </head>
   <body>
@@ -80,7 +85,9 @@
       <div class="row">
         <div class="col d-flex justify-content-end">
           <button class="btn btn-secondary" id="delAll">
-            <i class="fa-regular fa-trash-can"></i> Remove All
+            <!-- <i class="fa-regular fa-trash-can"></i> -->
+            <img id="imgDelAll" src="delete-list.png" alt="" />
+            Remove All
           </button>
         </div>
       </div>
