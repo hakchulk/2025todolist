@@ -65,7 +65,10 @@ function getInnerText(item, idx) {
         }" onclick="done(${idx})"></i>
         
         <input
-            class="form-control ${item.complete ? "btnDisabled" : ""}"
+            class="form-control 
+            ${item.complete ? "text-decoration-line-through" : ""} ${
+    item.complete ? "btnDisabled" : ""
+  }"
             type="text"
             id="inpItem_${idx}"
             placeholder=""
