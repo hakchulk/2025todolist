@@ -59,33 +59,32 @@ function saveList() {
 
 function getInnerText(item, idx) {
   let s = `
-    <li class="d-flex py-2 align-items-center gap-3">
-        
+    <li class="d-flex align-items-center gap-3">      
         <i class="btnUD fa-regular fa-square${
           item.complete ? "-check" : ""
         }" onclick="done(${idx})"></i>
         
-        <div class="col-9 ${
-          item.complete ? "text-decoration-line-through" : ""
-        }" ><input
+        <input
+            class="form-control ${item.complete ? "btnDisabled" : ""}"
             type="text"
             id="inpItem_${idx}"
-            class="form-control ${item.complete ? "btnDisabled" : ""}"
             placeholder=""
             value="${item.todo}"
             onkeydown="modiEventKeyPress(event, this, ${idx}, '${item.todo}')"
             onblur="modiItem(this, ${idx})"
           />        
-        </div>
+        
         <div class="d-flex gap-2">                
           <i class="btnUD btnModi fa-regular fa-pen-to-square ${
             item.complete ? "btnDisabled" : ""
           }" onclick="focusInp(${idx})"></i>
           <i class="btnUD btnDel fa-regular fa-square-minus ${
             item.complete ? "btnDisabled" : ""
-          }" onclick="delItem(${idx})"></i>
-        </div>        
-    </li>`;
+          }" onclick="delItem(${idx})"></i>          
+        </div>
+    </li>
+        <hr />
+`;
 
   return s;
 }
@@ -110,19 +109,6 @@ function modiItem(obj, idx) {
   viewList();
 }
 
-// function modiItem(obj, idx) {
-//   curIdx.value = idx;
-//   txtInp.value = _aList[idx].todo;
-//   txtInp.focus();
-//   toggleBtns();
-// }
-
-// function toggleBtns() {
-//   btnInp.classList.toggle("d-none");
-//   // btnModi.classList.toggle("d-none");
-//   btnCancel.classList.toggle("d-none");
-// }
-
 function viewList() {
   let s = "";
   for (let i = 0; i < _aList.length; i++) {
@@ -130,11 +116,6 @@ function viewList() {
   }
   const lst = document.querySelector(".todoView");
   lst.innerHTML = s;
-
-  //if (btnInp.classList.contains("d-none")) btnInp.classList.toggle("d-none");
-
-  // if (btnModi.classList.contains("d-none") == false)
-  //   btnModi.classList.toggle("d-none");
 
   txtInp.value = "";
 }
